@@ -5,24 +5,13 @@ import 'package:firebase_test/modules/note_module.dart';
 import 'package:flutter/material.dart';
 
 class MyNotes extends StatelessWidget {
-  const MyNotes({Key? key}) : super(key: key);
+   MyNotes({required this.notes,Key? key}) : super(key: key);
 
+  List<Note>notes;
   @override
   Widget build(BuildContext context) {
-    CollectionReference note = FirebaseFirestore.instance.collection('Note');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: note.snapshots(),
-      builder: (context,snapshot){
-        List<Note> notes =[];
-        if(snapshot.hasData)
-          {
-            for(int i = 0; i < snapshot.data!.docs.length;i++)
-              {
-                notes.add(Note.fromJson(snapshot.data!.docs[i]));
-              }
-          }
-        return Scaffold(
+    return  Scaffold(
           body: Column(
               children: [
           Expanded(
@@ -35,7 +24,5 @@ class MyNotes extends StatelessWidget {
               ]
           ),
         );
-      },
-    );
-  }
+      }
 }
